@@ -88,14 +88,15 @@ set_default_shell() {
     return
   fi
 
-  if ! grep -qxF "$fish_path" /etc/shells 2>/dev/null; then
-    echo "$fish_path" | as_root tee -a /etc/shells >/dev/null || true
-  fi
-  if command -v chsh >/dev/null 2>&1; then
-    as_root chsh -s "$fish_path" "$USER" || log "chsh failed"
+  # Keep bash as the login shell: the Ona SSH gateway runs bash syntax
+  # (`exec -l $SHELL -i`) through it, which fish can't parse. Undo any
+  # earlier chsh to fish.
+  if [ "$(getent passwd "$USER" | cut -d: -f7)" = "$fish_path" ] \
+    && command -v chsh >/dev/null 2>&1; then
+    as_root chsh -s /bin/bash "$USER" || log "chsh failed"
   fi
 
-  # Fallback for terminals that start bash regardless of the login shell.
+  # Switch interactive bash sessions to fish.
   local marker="# >>> dotfiles: exec fish >>>"
   if ! grep -qsF "$marker" "$HOME/.bashrc"; then
     cat >>"$HOME/.bashrc" <<EOF

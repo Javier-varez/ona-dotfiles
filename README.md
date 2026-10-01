@@ -8,7 +8,8 @@ Ona clones this repo to `~/dotfiles` and runs `install.sh`, which:
    - [nixvim-cfg](https://github.com/javier-varez/nixvim-cfg) (default package)
    - fish + starship prompt, `gits` → `git status`
    - fd, ripgrep, gitui
-3. Makes fish the default shell (`chsh`, plus an `exec fish` fallback in `~/.bashrc`).
+3. Starts fish from interactive bash sessions (`exec fish` in `~/.bashrc`). The login shell
+   stays bash because the Ona SSH gateway runs bash syntax through it.
 
 Logs are written to `~/.dotfiles-install.log`.
 
