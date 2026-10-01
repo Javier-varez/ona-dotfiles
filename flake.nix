@@ -1,6 +1,17 @@
 {
   description = "Ona dotfiles: standalone home-manager configuration";
 
+  # Mirrors the caches install.sh writes to ~/.config/nix/nix.conf, for use
+  # outside install.sh (nix prompts unless accept-flake-config is set).
+  nixConfig = {
+    extra-substituters = [
+      "https://nix-community.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
+  };
+
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
     home-manager = {

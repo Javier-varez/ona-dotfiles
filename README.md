@@ -3,7 +3,8 @@
 Dotfiles for [Ona environments](https://ona.com/docs/ona/configuration/dotfiles/overview).
 Ona clones this repo to `~/dotfiles` and runs `install.sh`, which:
 
-1. Installs Nix (single-user, no daemon) if it isn't present, with flakes enabled.
+1. Installs Nix (single-user, no daemon) if it isn't present, with flakes enabled and the
+   `nix-community` cachix cache added as a substituter.
 2. Applies the home-manager configuration in `home.nix`:
    - [nixvim-cfg](https://github.com/javier-varez/nixvim-cfg) (default package)
    - fish + starship prompt, `gits` → `git status`

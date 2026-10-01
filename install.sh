@@ -59,6 +59,14 @@ configure_nix() {
   if ! grep -qs '^experimental-features' "$conf"; then
     echo 'experimental-features = nix-command flakes' >>"$conf"
   fi
+  # Binary caches for prebuilt home-manager/nixvim dependencies, on top of
+  # cache.nixos.org.
+  if ! grep -qs '^extra-substituters' "$conf"; then
+    cat >>"$conf" <<'EOF'
+extra-substituters = https://nix-community.cachix.org
+extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
+EOF
+  fi
 }
 
 # Unauthenticated GitHub API calls (used to fetch `github:` flake inputs) are
