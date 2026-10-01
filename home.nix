@@ -21,6 +21,9 @@
 
   home.shellAliases = {
     gits = "git status";
+    gitl = "git log";
+    vi = "nvim";
+    vim = "nvim";
   };
 
   programs.fish = {
