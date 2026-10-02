@@ -1,4 +1,4 @@
-{ pkgs, nixvim, ... }:
+{ config, lib, pkgs, nixvim, ... }:
 {
   home.stateVersion = "26.05";
 
@@ -12,7 +12,16 @@
     pkgs.fd
     pkgs.ripgrep
     pkgs.gitui
+    pkgs.tmux
+    pkgs.nodejs
   ];
+
+  # Install from npm's latest dist-tag rather than the version pinned in nixpkgs.
+  home.activation.installPiCodingAgent = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    ${pkgs.nodejs}/bin/npm install --global --prefix "$HOME/.local" --no-audit --no-fund @earendil-works/pi-coding-agent@latest
+  '';
+
+  home.sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];
 
   home.sessionVariables = {
     EDITOR = "nvim";

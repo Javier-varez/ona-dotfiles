@@ -8,7 +8,8 @@ Ona clones this repo to `~/dotfiles` and runs `install.sh`, which:
 2. Applies the home-manager configuration in `home.nix`:
    - [nixvim-cfg](https://github.com/javier-varez/nixvim-cfg) (default package)
    - fish + starship prompt, `gits` → `git status`
-   - fd, ripgrep, gitui
+   - fd, ripgrep, gitui, tmux, and Node.js
+   - pi-coding-agent, installed from npm's latest release on each Home Manager activation
 3. Starts fish from interactive bash and zsh sessions (`exec fish` in `~/.bashrc` and
    `${ZDOTDIR:-$HOME}/.zshrc`). The login shell stays bash because the Ona SSH gateway
    runs bash syntax through it.
