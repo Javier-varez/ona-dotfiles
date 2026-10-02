@@ -110,10 +110,11 @@ set_default_shell() {
     as_root chsh -s /bin/bash "$USER" || log "chsh failed"
   fi
 
-  # Switch interactive bash sessions to fish.
-  local marker="# >>> dotfiles: exec fish >>>"
-  if ! grep -qsF "$marker" "$HOME/.bashrc"; then
-    cat >>"$HOME/.bashrc" <<EOF
+  # Switch interactive bash and zsh sessions to fish.
+  local rc marker="# >>> dotfiles: exec fish >>>"
+  for rc in "$HOME/.bashrc" "${ZDOTDIR:-$HOME}/.zshrc"; do
+    if ! grep -qsF "$marker" "$rc"; then
+      cat >>"$rc" <<EOF
 
 $marker
 if [[ \$- == *i* ]] && [ -t 0 ] && [ -z "\${VSCODE_RESOLVING_ENVIRONMENT:-}" ] \\
@@ -122,7 +123,8 @@ if [[ \$- == *i* ]] && [ -t 0 ] && [ -z "\${VSCODE_RESOLVING_ENVIRONMENT:-}" ] \
 fi
 # <<< dotfiles: exec fish <<<
 EOF
-  fi
+    fi
+  done
 }
 
 configure_nix
