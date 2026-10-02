@@ -53,9 +53,15 @@ install_nix() {
   source_nix
 }
 
+# Runs before install_nix so the installer's own nix invocations see it.
 configure_nix() {
   mkdir -p "$HOME/.config/nix"
   local conf="$HOME/.config/nix/nix.conf"
+  # As root, nix defaults to building as members of the `nixbld` group, which
+  # only the multi-user installer creates. Build as the calling user instead.
+  if [ "$(id -u)" -eq 0 ] && ! grep -qs '^build-users-group' "$conf"; then
+    echo 'build-users-group =' >>"$conf"
+  fi
   if ! grep -qs '^experimental-features' "$conf"; then
     echo 'experimental-features = nix-command flakes' >>"$conf"
   fi
@@ -119,8 +125,8 @@ EOF
   fi
 }
 
-install_nix
 configure_nix
+install_nix
 configure_github_token
 apply_home_manager
 set_default_shell
