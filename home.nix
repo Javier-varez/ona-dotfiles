@@ -39,6 +39,10 @@
     enable = true;
     interactiveShellInit = ''
       set -g fish_greeting
+
+      if status is-interactive; and isatty stdin; and not set -q TMUX; and not set -q VSCODE_RESOLVING_ENVIRONMENT
+        exec tmux new-session -A -s main
+      end
     '';
   };
 

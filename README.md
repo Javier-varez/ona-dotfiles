@@ -7,7 +7,7 @@ Ona clones this repo to `~/dotfiles` and runs `install.sh`, which:
    `nix-community` cachix cache added as a substituter.
 2. Applies the home-manager configuration in `home.nix`:
    - [nixvim-cfg](https://github.com/javier-varez/nixvim-cfg) (default package)
-   - fish + starship prompt, `gits` → `git status`
+   - fish + starship prompt, auto-attached to tmux session `main` in interactive terminals, `gits` → `git status`
    - fd, ripgrep, gitui, tmux, and Node.js
    - pi-coding-agent, installed from npm's latest release on each Home Manager activation
 3. Starts fish from interactive bash and zsh sessions (`exec fish` in `~/.bashrc` and
